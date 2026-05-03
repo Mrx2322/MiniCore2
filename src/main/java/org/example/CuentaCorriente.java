@@ -4,4 +4,8 @@ public class CuentaCorriente extends Cuenta {
     public CuentaCorriente(String id, String titular, Double saldo) {
         super(id, titular, saldo);
     }
+
+    @Override
+    public void depositar( double monto) {
+    }
 }
