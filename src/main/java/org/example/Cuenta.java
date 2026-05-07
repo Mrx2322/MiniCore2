@@ -1,6 +1,9 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public abstract class Cuenta {
+    //ATRIBUTOS
     private String id;
     private String titular;
     private Double saldo;
@@ -11,6 +14,7 @@ public abstract class Cuenta {
         this.titular = titular;
         this.saldo = saldo;
     }
+     // metodo getter and setter
 
     public String getId() {
         return id;
@@ -36,11 +40,18 @@ public abstract class Cuenta {
         this.saldo = saldo;
     }
 
-    //Métodos
-    public abstract void depositar( double monto);
-    public void retirar(){
-        if (saldo > 0) {
-            Throw new IllegalAccessException("Saldo insuficiente");
+    //Métodos abstractos donde se sobreEscribe en CuentaAhorro y CuentaCorriente
+    public abstract void depositar( Double monto);
+    public abstract void retirar(Double monto);
+
+    public void transferencia(Double monto, Cuenta cuentaDestino){
+        System.out.println("Realizando transferencia...");
+        if (this.getSaldo() < monto){
+            throw new IllegalArgumentException("Saldo Insuficiente para realizar la transferencia de " + monto);
         }
+
+        this.retirar(monto);
+        cuentaDestino.depositar(monto);
+        System.out.println("Transferencia realizada exitosamente");
     }
 }
