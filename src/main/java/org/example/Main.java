@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.model.CuentaAhorro;
+import org.example.model.CuentaCorriente;
+
 public class Main {
     public static void main(String[] args) {
         CuentaAhorro cuentaAhorro = new CuentaAhorro("001", "Juan Perez", 1000.0);

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 public class CuentaAhorro extends Cuenta {
     public CuentaAhorro(String id, String titular, Double saldo) {

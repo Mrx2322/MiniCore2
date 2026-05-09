@@ -1,6 +1,4 @@
-package org.example;
-
-import java.math.BigDecimal;
+package org.example.model;
 
 public abstract class Cuenta {
     //ATRIBUTOS

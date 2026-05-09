@@ -1,6 +1,4 @@
-package org.example;
-
-import java.math.BigDecimal;
+package org.example.model;
 
 public class CuentaCorriente extends Cuenta {
     public CuentaCorriente(String id, String titular, Double saldo) {
