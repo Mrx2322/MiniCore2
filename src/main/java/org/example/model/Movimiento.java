@@ -1,22 +1,26 @@
 package org.example.model;
 
+import java.time.LocalDateTime;
+
 public class Movimiento {
     private int id;
-    private String tipo;
+    private String cuentaId;
     private Double monto;
+    private String tipo_movimiento;
+    private LocalDateTime fechaMovimiento;
 
     public Movimiento(int id, Double monto, String tipo) {
         this.id = id;
         this.monto = monto;
-        this.tipo = tipo;
+        this.Cuenta = tipo;
     }
 
     public String getTipo() {
-        return tipo;
+        return Cuenta;
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        this.Cuenta = tipo;
     }
 
     public Double getMonto() {
