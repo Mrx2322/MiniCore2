@@ -28,21 +28,25 @@ public class ClienteRepository {
         }
     }
 
-    public void insertCandidate() {
+    public void insertCliente() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
                 String insertSql = "INSERT INTO Cliente (name, dni) VALUES (?, ?)";
                 try (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
-                    // Insert first record
+                    // Primer registro
                     pstmt.setString(1, "Deivis Roberto");
                     pstmt.setString(2, "74291919");
-                    pstmt.executeUpdate();
+                    pstmt.addBatch(); // En lugar de executeUpdate, lo agregamos a la "caja" (lote)
 
-                    // Insert second record
-                    pstmt.setString(1, "Senior Mentor");
-                    pstmt.setString(2, "Architecture");
-                    pstmt.executeUpdate();
-                    System.out.println("3. Mock data inserted successfully.");
+                    // Segundo registro
+                    pstmt.setString(1, "Antonio Seguro");
+                    pstmt.setString(2, "1278567");
+                    pstmt.addBatch();
+
+                    // Ejecutamos toda la caja de un solo viaje a la base de datos
+                    pstmt.executeBatch();
+
+                    System.out.println("Mock data inserted in batch successfully.");
                 }
             }
         } catch (SQLException e) {
@@ -50,21 +54,21 @@ public class ClienteRepository {
         }
     }
 
-    public void selectCandidate() {
+    public void selectCliente() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
-                String selectSql = "SELECT id, name, role FROM Cliente";
+                String selectSql = "SELECT id, name, dni FROM Cliente";
 
                 try (PreparedStatement pstmt = conn.prepareStatement(selectSql);
                      ResultSet rs = pstmt.executeQuery()) {
 
-                    System.out.println("4. Fetching candidates from database:");
+                    System.out.println("Fetching clientes from database:");
 
                     while (rs.next()) {
                         int id = rs.getInt("id");
                         String name = rs.getString("name");
-                        String role = rs.getString("role");
-                        System.out.println("   -> ID: " + id + " | Name: " + name + " | Role: " + role);
+                        String dni = rs.getString("dni");
+                        System.out.println("   -> ID: " + id + " | Name: " + name + " | Dni: " + dni);
                     }
                 }
             } else {
@@ -75,12 +79,5 @@ public class ClienteRepository {
             System.err.println("Database error occurred!");
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        ClienteRepository repository = new ClienteRepository();
-        repository.createTable();
-        repository.insertCandidate();
-        repository.selectCandidate();
     }
 }
