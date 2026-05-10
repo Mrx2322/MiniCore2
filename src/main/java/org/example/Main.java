@@ -13,8 +13,8 @@ public class Main {
 
         // Realizar operaciones en la cuenta de ahorro
 //        cuentaAhorro.depositar(200.0);
-        cuentaAhorro.retirar(500.0);
-        cuentaAhorro.retirar(600.00);
+            cuentaAhorro.retirar(500.0);
+            cuentaAhorro.retirar(600.00);
 
 //        // Realizar operaciones en la cuenta corriente
 //        cuentaCorriente.depositar(300.0);

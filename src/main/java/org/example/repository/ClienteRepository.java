@@ -17,10 +17,10 @@ public class ClienteRepository {
     public void createTable() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
-                String createTableSql = "CREATE TABLE IF NOT EXISTS candidates (" +
+                String createTableSql = "CREATE TABLE IF NOT EXISTS Cliente (" +
                         "id SERIAL PRIMARY KEY, " +
                         "name VARCHAR(255), " +
-                        "role VARCHAR(255))";
+                        "dni VARCHAR(255))";
                 executePreparedStatement(conn, createTableSql);
             }
         } catch (SQLException e) {
@@ -31,11 +31,11 @@ public class ClienteRepository {
     public void insertCandidate() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
-                String insertSql = "INSERT INTO candidates (name, role) VALUES (?, ?)";
+                String insertSql = "INSERT INTO Cliente (name, dni) VALUES (?, ?)";
                 try (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
                     // Insert first record
-                    pstmt.setString(1, "Junior Developer");
-                    pstmt.setString(2, "Backend Java");
+                    pstmt.setString(1, "Deivis Roberto");
+                    pstmt.setString(2, "74291919");
                     pstmt.executeUpdate();
 
                     // Insert second record
@@ -53,7 +53,7 @@ public class ClienteRepository {
     public void selectCandidate() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
-                String selectSql = "SELECT id, name, role FROM candidates";
+                String selectSql = "SELECT id, name, role FROM Cliente";
 
                 try (PreparedStatement pstmt = conn.prepareStatement(selectSql);
                      ResultSet rs = pstmt.executeQuery()) {
