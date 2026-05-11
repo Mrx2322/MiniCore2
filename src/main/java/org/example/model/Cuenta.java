@@ -2,17 +2,19 @@ package org.example.model;
 
 public abstract class Cuenta {
     //ATRIBUTOS
-    private String id;
-    private String titular;
-    private Double saldo;
+   private String id;
+   private String cliente_id;
+   private String numero_cuenta;
+   private String tipo_cuenta;
+   private Double saldo_actual;
 
-    // Constructor
-    public Cuenta(String id, String titular, Double saldo) {
+    public Cuenta(String id, String numero_cuenta, String cliente_id, String tipo_cuenta, Double saldo_actual) {
         this.id = id;
-        this.titular = titular;
-        this.saldo = saldo;
+        this.numero_cuenta = numero_cuenta;
+        this.cliente_id = cliente_id;
+        this.tipo_cuenta = tipo_cuenta;
+        this.saldo_actual = saldo_actual;
     }
-     // metodo getter and setter
 
     public String getId() {
         return id;
@@ -22,20 +24,36 @@ public abstract class Cuenta {
         this.id = id;
     }
 
-    public String getTitular() {
-        return titular;
+    public String getCliente_id() {
+        return cliente_id;
     }
 
-    public void setTitular(String titular) {
-        this.titular = titular;
+    public void setCliente_id(String cliente_id) {
+        this.cliente_id = cliente_id;
     }
 
-    public Double getSaldo() {
-        return saldo;
+    public String getNumero_cuenta() {
+        return numero_cuenta;
     }
 
-    public void setSaldo(Double saldo) {
-        this.saldo = saldo;
+    public void setNumero_cuenta(String numero_cuenta) {
+        this.numero_cuenta = numero_cuenta;
+    }
+
+    public String getTipo_cuenta() {
+        return tipo_cuenta;
+    }
+
+    public void setTipo_cuenta(String tipo_cuenta) {
+        this.tipo_cuenta = tipo_cuenta;
+    }
+
+    public Double getSaldo_actual() {
+        return saldo_actual;
+    }
+
+    public void setSaldo_actual(Double saldo_actual) {
+        this.saldo_actual = saldo_actual;
     }
 
     //Métodos abstractos donde se sobreEscribe en CuentaAhorro y CuentaCorriente
@@ -44,7 +62,7 @@ public abstract class Cuenta {
 
     public void transferencia(Double monto, Cuenta cuentaDestino){
         System.out.println("Realizando transferencia...");
-        if (this.getSaldo() < monto){
+        if (this.getSaldo_actual() < monto){
             throw new IllegalArgumentException("Saldo Insuficiente para realizar la transferencia de " + monto);
         }
 

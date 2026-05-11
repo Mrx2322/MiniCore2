@@ -6,14 +6,14 @@ public class Movimiento {
     private int id;
     private String cuentaId;
     private Double monto;
-    private String tipo_movimiento;
+    private String tipoMovimiento;
     private LocalDateTime fechaMovimiento;
 
-    public Movimiento(int id, String cuentaId, Double monto, String tipo_movimiento, LocalDateTime fechaMovimiento) {
+    public Movimiento(int id, String cuentaId, Double monto, String tipoMovimiento, LocalDateTime fechaMovimiento) {
         this.id = id;
         this.cuentaId = cuentaId;
         this.monto = monto;
-        this.tipo_movimiento = tipo_movimiento;
+        this.tipoMovimiento = tipoMovimiento;
         this.fechaMovimiento = fechaMovimiento;
     }
 
@@ -41,12 +41,12 @@ public class Movimiento {
         this.monto = monto;
     }
 
-    public String getTipo_movimiento() {
-        return tipo_movimiento;
+    public String getTipoMovimiento() {
+        return tipoMovimiento;
     }
 
-    public void setTipo_movimiento(String tipo_movimiento) {
-        this.tipo_movimiento = tipo_movimiento;
+    public void setTipoMovimiento(String tipoMovimiento) {
+        this.tipoMovimiento = tipoMovimiento;
     }
 
     public LocalDateTime getFechaMovimiento() {

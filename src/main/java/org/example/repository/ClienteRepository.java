@@ -22,7 +22,7 @@ public class ClienteRepository {
             if (conn != null) {
                 String createTableSql = "CREATE TABLE IF NOT EXISTS Cliente (" +
                         "id SERIAL PRIMARY KEY, " +
-                        "name VARCHAR(255), " +
+                        "nombre VARCHAR(255), " +
                         "dni VARCHAR(255))" +
                         "email VARCHAR(255)" +
                         "fechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP";
@@ -36,7 +36,7 @@ public class ClienteRepository {
     public void insertCliente() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
-                String insertSql = "INSERT INTO Cliente (name, dni, email, fechaRegistro) VALUES (?, ?, ?, ?)";
+                String insertSql = "INSERT INTO Cliente (nombre, dni, email, fechaRegistro) VALUES (?, ?, ?, ?)";
                 try (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
                     // Primer registro
                     pstmt.setString(1, "Deivis Roberto");
@@ -66,7 +66,7 @@ public class ClienteRepository {
     public void selectCliente() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
-                String selectSql = "SELECT id, name, dni, email, fechaRegistro FROM Cliente";
+                String selectSql = "SELECT id, nombre, dni, email, fechaRegistro FROM Cliente";
 
                 try (PreparedStatement pstmt = conn.prepareStatement(selectSql);
                      ResultSet rs = pstmt.executeQuery()) {
@@ -75,12 +75,12 @@ public class ClienteRepository {
 
                     while (rs.next()) {
                         int id = rs.getInt("id");
-                        String name = rs.getString("name");
+                        String nombre = rs.getString("nombre");
                         String dni = rs.getString("dni");
                         String email = rs.getString("email");
                         String fechaRegistro = rs.getString("fechaRegistro");
                         logger.log(Level.INFO, "   -> ID: {0} | Name: {1} | Dni: {2} | Email: {3} | Fecha: {4}",
-                                new Object[]{id, name, dni, email, fechaRegistro});
+                                new Object[]{id, nombre, dni, email, fechaRegistro});
                     }
                 }
             } else {
