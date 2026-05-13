@@ -23,9 +23,10 @@ public class ClienteRepository {
                 String createTableSql = "CREATE TABLE IF NOT EXISTS Cliente (" +
                         "id SERIAL PRIMARY KEY, " +
                         "nombre VARCHAR(255), " +
-                        "dni VARCHAR(255))" +
-                        "email VARCHAR(255)" +
-                        "fechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP";
+                        "dni VARCHAR(255) UNIQUE, " +
+                        "email VARCHAR(255) UNIQUE, " +
+                        "fechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                        ")";
                 executePreparedStatement(conn, createTableSql);
             }
         } catch (SQLException e) {
@@ -36,29 +37,33 @@ public class ClienteRepository {
     public void insertCliente() {
         try (Connection conn = ConexionBD.connect()) {
             if (conn != null) {
+                // Quitamos el ::timestamp del SQL porque lo manejaremos correctamente desde Java
                 String insertSql = "INSERT INTO Cliente (nombre, dni, email, fechaRegistro) VALUES (?, ?, ?, ?)";
+
                 try (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
-                    // Primer registro
+
+                    // --- Primer registro ---
                     pstmt.setString(1, "Deivis Roberto");
                     pstmt.setString(2, "74291919");
                     pstmt.setString(3, "djemdliam@gmail.com");
-                    pstmt.setString(4, "2024-06-01");
-                    pstmt.addBatch(); // En lugar de executeUpdate, lo agregamos a la "caja" (lote)
+                    pstmt.setTimestamp(4, java.sql.Timestamp.valueOf("2024-06-01 00:00:00"));
+                    pstmt.addBatch();
 
-                    // Segundo registro
+                    // --- Segundo registro ---
                     pstmt.setString(1, "Antonio Seguro");
                     pstmt.setString(2, "73128522");
                     pstmt.setString(3, "acsegurog@gmail.com");
-                    pstmt.setString(4, "2025-05-01");
+                    pstmt.setTimestamp(4, java.sql.Timestamp.valueOf("2025-05-01 00:00:00"));
                     pstmt.addBatch();
 
-                    // Ejecutamos toda la caja de un solo viaje a la base de datos
                     pstmt.executeBatch();
 
                     logger.info("Mock data inserted in batch successfully.");
                 }
             }
         } catch (SQLException e) {
+            // Es mejor usar el logger para errores también
+            logger.severe("Error insertando batch: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -2,33 +2,34 @@ package org.example.model;
 
 public abstract class Cuenta {
     //ATRIBUTOS
-   private String id;
-   private String cliente_id;
+   private int id;
+   private int cliente_id;
    private String numero_cuenta;
    private String tipo_cuenta;
    private Double saldo_actual;
 
-    public Cuenta(String id, String numero_cuenta, String cliente_id, String tipo_cuenta, Double saldo_actual) {
+    //CONSTRUCTOR
+    public Cuenta(int id, int cliente_id, String numero_cuenta, String tipo_cuenta, Double saldo_actual) {
         this.id = id;
-        this.numero_cuenta = numero_cuenta;
         this.cliente_id = cliente_id;
+        this.numero_cuenta = numero_cuenta;
         this.tipo_cuenta = tipo_cuenta;
         this.saldo_actual = saldo_actual;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getCliente_id() {
+    public int getCliente_id() {
         return cliente_id;
     }
 
-    public void setCliente_id(String cliente_id) {
+    public void setCliente_id(int cliente_id) {
         this.cliente_id = cliente_id;
     }
 

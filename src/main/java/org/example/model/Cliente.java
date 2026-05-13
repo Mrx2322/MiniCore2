@@ -1,13 +1,15 @@
 package org.example.model;
 
+import java.sql.Timestamp;
+
 public class Cliente {
     private int id;
     private String nombre;
     private String dni;
     private String email;
-    private String fechaRegistro;
+    private Timestamp fechaRegistro;
 
-    public Cliente(int id, String nombre, String dni, String email, String fechaRegistro) {
+    public Cliente(int id, String nombre, String dni, String email, Timestamp fechaRegistro) {
         this.id = id;
         this.nombre = nombre;
         this.dni = dni;
@@ -47,11 +49,11 @@ public class Cliente {
         this.email = email;
     }
 
-    public String getFechaRegistro() {
+    public Timestamp getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(String fechaRegistro) {
+    public void setFechaRegistro(Timestamp fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 }
