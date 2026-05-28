@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CuentaCorrienteDepository {
+public class CuentaCorrienteRepository {
     // TODO Implementar métodos para manejar la persistencia de las cuentas corrientes en la base de datos
-    private static final Logger logger = Logger.getLogger(CuentaCorrienteDepository.class.getName());
+    private static final Logger logger = Logger.getLogger(CuentaCorrienteRepository.class.getName());
     private void executePreparedStatement(Connection conn, String sql) throws SQLException {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();

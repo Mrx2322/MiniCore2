@@ -1,27 +1,39 @@
 package org.example.model;
 
-import java.sql.Timestamp;
+import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "clientes") // llamar a la tabla
 public class Cliente {
-    private int id;
-    private String nombre;
-    private String dni;
-    private String email;
-    private Timestamp fechaRegistro;
 
-    public Cliente(int id, String nombre, String dni, String email, Timestamp fechaRegistro) {
-        this.id = id;
-        this.nombre = nombre;
-        this.dni = dni;
-        this.email = email;
-        this.fechaRegistro = fechaRegistro;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nombre;
+    private String apellido;
+    private String email;
+
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
+
+    public Cliente() {
     }
 
-    public int getId() {
+    public Cliente(String nombre, String apellido, String email) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.fechaRegistro = LocalDateTime.now();
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,12 +45,12 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getDni() {
-        return dni;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getEmail() {
@@ -49,11 +61,11 @@ public class Cliente {
         this.email = email;
     }
 
-    public Timestamp getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Timestamp fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 }
