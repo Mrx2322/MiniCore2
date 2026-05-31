@@ -1,22 +1,66 @@
 package org.example.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "cuenta_corriente")
 public class CuentaCorriente extends Cuenta {
-    public CuentaCorriente(int id, int Cliente_id,String numero_cuenta, String tipo_cuenta, Double saldo_actual) {
-        super(id, Cliente_id, numero_cuenta, tipo_cuenta, saldo_actual);
+
+    // Atributo propio de una cuenta corriente (ejemplo: línea de sobregiro autorizado)
+    private Double limiteSobregiro;
+
+    // 1. CONSTRUCTOR VACÍO (Obligatorio para JPA)
+    public CuentaCorriente() {
     }
+
+    // 2. CONSTRUCTOR ACTUALIZADO (Recibe el objeto Cliente y omite el id manual)
+    public CuentaCorriente(Cliente cliente, String numeroCuenta, String tipoCuenta, Double saldoActual, Double limiteSobregiro) {
+        super(cliente, numeroCuenta, tipoCuenta, saldoActual); // Llama al constructor de la clase padre
+        this.limiteSobregiro = limiteSobregiro; // Inicializa el atributo específico de Cuenta Corriente
+    }
+
+    // Getter y Setter exclusivo
+
+    public Double getLimiteSobregiro() {
+        return limiteSobregiro;
+    }
+
+    public void setLimiteSobregiro(Double limiteSobregiro) {
+        this.limiteSobregiro = limiteSobregiro;
+    }
+
+
+    // IMPLEMENTACIÓN DE MÉTODOS ABSTRACTOS
 
     @Override
     public void depositar(Double monto) {
-        System.out.println("Depositando " + monto + " en la cuenta corriente de " + getCliente_id());
+        if (monto <= 0) {
+            throw new IllegalArgumentException("El monto a depositar debe ser positivo");
+        }
+
+        this.setSaldoActual(this.getSaldoActual() + monto);
+        System.out.println("Depósito exitoso en Cuenta Corriente. Nuevo saldo: S/ " + this.getSaldoActual());
     }
 
     @Override
-    public void retirar(Double monto){
-        System.out.println("Retirando " + monto + " de la cuenta corriente de " + getCliente_id());
-        if (getSaldo_actual() + 500 >= monto) {
-            System.out.println("El sobregiro permitido");
+    public void retirar(Double monto) {
+        System.out.println("Retirando " + monto + " de la cuenta corriente del cliente con ID " + this.getCliente().getId());
+
+        if (monto <= 0) {
+            throw new IllegalArgumentException("El monto a retirar debe ser positivo");
+        }
+
+        System.out.println("Intentando retirar S/ " + monto + " de la cuenta: " + this.getNumeroCuenta());
+
+        // Lógica típica de Cuenta Corriente: el saldo disponible incluye el sobregiro
+        Double saldoDisponible = this.getSaldoActual() + this.limiteSobregiro;
+
+        if (saldoDisponible >= monto) {
+            this.setSaldoActual(this.getSaldoActual() - monto);
+            System.out.println("Retiro exitoso de Cuenta Corriente. Saldo restante: S/ " + this.getSaldoActual());
         } else {
-            throw new IllegalArgumentException("No se puede retirar más de lo que hay en la cuenta" + monto);
+            throw new IllegalArgumentException("Saldo y línea de sobregiro insuficientes. Fondos totales disponibles: S/ " + saldoDisponible);
         }
     }
 }

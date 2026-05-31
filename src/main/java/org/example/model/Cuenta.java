@@ -1,74 +1,91 @@
 package org.example.model;
 
-public abstract class Cuenta {
-    //ATRIBUTOS
-   private int id;
-   private int cliente_id;
-   private String numero_cuenta;
-   private String tipo_cuenta;
-   private Double saldo_actual;
+import jakarta.persistence.*;
 
-    //CONSTRUCTOR
-    public Cuenta(int id, int cliente_id, String numero_cuenta, String tipo_cuenta, Double saldo_actual) {
-        this.id = id;
-        this.cliente_id = cliente_id;
-        this.numero_cuenta = numero_cuenta;
-        this.tipo_cuenta = tipo_cuenta;
-        this.saldo_actual = saldo_actual;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Cuenta {
+    //Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // Relacion con el cliente
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @Column(name = "numero_cuenta")
+    private String numeroCuenta;
+
+    @Column(name = "tipo_cuenta")
+    private String tipoCuenta;
+
+    @Column(name = "saldo_actual")
+    private Double saldoActual;
+
+    public Cuenta() {
     }
 
-    public int getId() {
+    public Cuenta(Cliente cliente, String numeroCuenta, String tipoCuenta, Double saldoActual) {
+        this.cliente = cliente;
+        this.numeroCuenta = numeroCuenta;
+        this.tipoCuenta = tipoCuenta;
+        this.saldoActual = saldoActual;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getCliente_id() {
-        return cliente_id;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCliente_id(int cliente_id) {
-        this.cliente_id = cliente_id;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public String getNumero_cuenta() {
-        return numero_cuenta;
+    public String getNumeroCuenta() {
+        return numeroCuenta;
     }
 
-    public void setNumero_cuenta(String numero_cuenta) {
-        this.numero_cuenta = numero_cuenta;
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
     }
 
-    public String getTipo_cuenta() {
-        return tipo_cuenta;
+    public String getTipoCuenta() {
+        return tipoCuenta;
     }
 
-    public void setTipo_cuenta(String tipo_cuenta) {
-        this.tipo_cuenta = tipo_cuenta;
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
     }
 
-    public Double getSaldo_actual() {
-        return saldo_actual;
+    public Double getSaldoActual() {
+        return saldoActual;
     }
 
-    public void setSaldo_actual(Double saldo_actual) {
-        this.saldo_actual = saldo_actual;
+    public void setSaldoActual(Double saldoActual) {
+        this.saldoActual = saldoActual;
     }
 
-    //Métodos abstractos donde se sobreEscribe en CuentaAhorro y CuentaCorriente
-    public abstract void depositar( Double monto);
+    //Metodo de negocio
+
+    public abstract void depositar(Double monto);
     public abstract void retirar(Double monto);
 
-    public void transferencia(Double monto, Cuenta cuentaDestino){
+    public void transferir(Cuenta cuentaDestino, Double monto) {
         System.out.println("Realizando transferencia...");
-        if (this.getSaldo_actual() < monto){
+        if (this.getSaldoActual() < monto){
             throw new IllegalArgumentException("Saldo Insuficiente para realizar la transferencia de " + monto);
         }
-
         this.retirar(monto);
         cuentaDestino.depositar(monto);
-        System.out.println("Transferencia realizada exitosamente");
+        System.out.println("Transferencia realizada con exito");
     }
 }
