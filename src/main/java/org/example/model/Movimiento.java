@@ -11,7 +11,7 @@ public class Movimiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    // EL CAMBIO PRINCIPAL: Guardamos el objeto Cuenta, no un String
+    // EL CAMBIO PRINCIPAL: Guardamos el objeto CuentaRepository, no un String
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuenta_id")
     private Cuenta cuenta;
@@ -26,7 +26,7 @@ public class Movimiento {
     public Movimiento() {
     }
 
-    // 2. CONSTRUCTOR ACTUALIZADO (Recibe Cuenta, y omitimos el ID porque es autogenerado)
+    // 2. CONSTRUCTOR ACTUALIZADO (Recibe CuentaRepository, y omitimos el ID porque es autogenerado)
     public Movimiento(Cuenta cuenta, Double monto, String tipoMovimiento, LocalDateTime fechaMovimiento) {
         this.cuenta = cuenta;
         this.monto = monto;

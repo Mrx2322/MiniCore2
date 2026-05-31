@@ -17,7 +17,7 @@ public class CuentaCorriente extends Cuenta {
     // 2. CONSTRUCTOR ACTUALIZADO (Recibe el objeto Cliente y omite el id manual)
     public CuentaCorriente(Cliente cliente, String numeroCuenta, String tipoCuenta, Double saldoActual, Double limiteSobregiro) {
         super(cliente, numeroCuenta, tipoCuenta, saldoActual); // Llama al constructor de la clase padre
-        this.limiteSobregiro = limiteSobregiro; // Inicializa el atributo específico de Cuenta Corriente
+        this.limiteSobregiro = limiteSobregiro; // Inicializa el atributo específico de CuentaRepository Corriente
     }
 
     // Getter y Setter exclusivo
@@ -40,7 +40,7 @@ public class CuentaCorriente extends Cuenta {
         }
 
         this.setSaldoActual(this.getSaldoActual() + monto);
-        System.out.println("Depósito exitoso en Cuenta Corriente. Nuevo saldo: S/ " + this.getSaldoActual());
+        System.out.println("Depósito exitoso en CuentaRepository Corriente. Nuevo saldo: S/ " + this.getSaldoActual());
     }
 
     @Override
@@ -53,12 +53,12 @@ public class CuentaCorriente extends Cuenta {
 
         System.out.println("Intentando retirar S/ " + monto + " de la cuenta: " + this.getNumeroCuenta());
 
-        // Lógica típica de Cuenta Corriente: el saldo disponible incluye el sobregiro
+        // Lógica típica de CuentaRepository Corriente: el saldo disponible incluye el sobregiro
         Double saldoDisponible = this.getSaldoActual() + this.limiteSobregiro;
 
         if (saldoDisponible >= monto) {
             this.setSaldoActual(this.getSaldoActual() - monto);
-            System.out.println("Retiro exitoso de Cuenta Corriente. Saldo restante: S/ " + this.getSaldoActual());
+            System.out.println("Retiro exitoso de CuentaRepository Corriente. Saldo restante: S/ " + this.getSaldoActual());
         } else {
             throw new IllegalArgumentException("Saldo y línea de sobregiro insuficientes. Fondos totales disponibles: S/ " + saldoDisponible);
         }
