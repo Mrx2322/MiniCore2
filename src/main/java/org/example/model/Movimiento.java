@@ -9,7 +9,7 @@ public class Movimiento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     // EL CAMBIO PRINCIPAL: Guardamos el objeto CuentaRepository, no un String
     @ManyToOne(fetch = FetchType.LAZY)

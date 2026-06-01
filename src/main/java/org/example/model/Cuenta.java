@@ -8,7 +8,7 @@ public abstract class Cuenta {
     //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     // Relacion con el cliente
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,11 +34,11 @@ public abstract class Cuenta {
         this.saldoActual = saldoActual;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
